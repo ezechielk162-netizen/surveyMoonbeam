@@ -1,6 +1,6 @@
 
 import {
-  AppstoreOutlined, VideoCameraOutlined, MailOutlined
+  BarChartOutlined
 } from "@ant-design/icons-vue";
 
 export const randomImage = {
@@ -27,19 +27,7 @@ export const menuItems = [
   {
     name: 'nav.home',
     to: "/#terrain",
-    icon: AppstoreOutlined,
-    dropdown: null,
-  },
-  {
-    name: "nav.videos",
-    to: "/#realisation",
-    icon: VideoCameraOutlined,
-    dropdown: null,
-  },
-  {
-    name: "nav.seemore",
-    to: "/#footer",
-    icon: MailOutlined,
+    icon: BarChartOutlined,
     dropdown: null,
   }
 ];

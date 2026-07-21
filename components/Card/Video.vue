@@ -1,270 +1,161 @@
 <template>
-    <div id="realisation">
-        <h2 class="section-title text-center mb-5">Nos Réalisations</h2>
-  <div class="video-grid container">
-    <div
-      v-for="(video, index) in videos"
-      :key="index"
-      class="video-card"
-      @click="openVideo(video)"
-    >
-      <div class="video-thumbnail">
-        <img :src="video.thumbnail" :alt="video.title" />
-
-        <div class="overlay">
-          <div class="play-btn">▶</div>
-        </div>
-
-        <div class="duration">
-          {{ video.duration }}
-        </div>
-      </div>
-
-      <div class="video-content">
-        <h3 class="video-title">{{ video.title }}</h3>
-        <p class="video-description">
-          {{ video.description }}
-        </p>
+  <div class="landing">
+    <div class="glow"></div>
+    <div class="content">
+      <p class="eyebrow">Ville de Moonbeam · Consultation publique</p>
+      <h1 class="title">Ensemble pour l'avenir de Moonbeam</h1>
+      <p class="subtitle">
+        Votre opinion guide directement les décisions du conseil municipal et les demandes de
+        subvention pour le logement, les services aux aînés et le développement économique.
+        Le sondage prend environ 8 minutes.
+      </p>
+      <div class="actions">
+        <NuxtLink to="/survey" class="btn primary">Commencer le sondage</NuxtLink>
+        <NuxtLink to="/dashboard" class="btn secondary">Voir les résultats</NuxtLink>
       </div>
     </div>
-
-    <!-- Modal -->
-    <a-modal
-      v-model:open="videoModalVisible"
-      :title="selectedVideo?.title"
-      :footer="null"
-      width="900px"
-      centered
-      @cancel="closeVideo"
-    >
-      <div class="video-container">
-        <iframe
-          v-if="videoModalVisible"
-          :src="selectedVideo?.videoUrl"
-          frameborder="0"
-          allowfullscreen
-        ></iframe>
-      </div>
-
-      <div class="modal-description">
-        {{ selectedVideo?.description }}
-      </div>
-    </a-modal>
   </div>
-</div>
-
 </template>
 
 <script setup>
-import { ref } from "vue";
-
-const props = defineProps({
-  videos: {
-    type: Array,
-    required: true,
-  },
-});
-
-const videoModalVisible = ref(false);
-const selectedVideo = ref(null);
-
-const openVideo = (video) => {
-  selectedVideo.value = video;
-  videoModalVisible.value = true;
-};
-
-const closeVideo = () => {
-  videoModalVisible.value = false;
-};
+useHead({ title: "Sondage citoyen — Moonbeam" });
 </script>
 
 <style scoped>
-.video-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 30px;
-}
+.landing {
+  --bg: #f5f7f4;
+  --ink: #152524;
+  --primary: #164e48;
+  --primary-light: #2c7a6e;
+  --accent: #e8b14d;
 
-/* CARD */
-.video-card {
-  background: #ffffff;
-  border-radius: 18px;
-  overflow: hidden;
-  cursor: pointer;
-  transition: all 0.35s ease;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-  display: flex;
-  flex-direction: column;
-}
-
-.video-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.15);
-}
-
-/* THUMBNAIL */
-.video-thumbnail {
   position: relative;
-  height: 220px;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, var(--primary) 0%, #0f3934 62%, #0c2e2a 100%);
+  color: #f4f6f2;
   overflow: hidden;
+  font-family: "Inter", system-ui, sans-serif;
+  text-align: center;
+  padding: 2rem;
 }
 
-.video-thumbnail img {
+.glow {
+  position: absolute;
+  top: -120px;
+  right: -60px;
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle, rgba(232, 177, 77, 0.55) 0%, rgba(232, 177, 77, 0.12) 45%, transparent 70%);
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  max-width: 560px;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.6s ease;
 }
 
-.video-card:hover .video-thumbnail img {
-  transform: scale(1.1);
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 0 0 14px;
 }
 
-/* OVERLAY */
-.overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  opacity: 0;
-  transition: 0.3s ease;
+.title {
+  font-family: "Fraunces", serif;
+  font-weight: 600;
+  font-size: 2.4rem;
+  line-height: 1.15;
+  margin: 0 0 16px;
 }
 
-.video-card:hover .overlay {
-  opacity: 1;
-}
-
-/* PLAY BUTTON */
-.play-btn {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  background: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 28px;
-  color: #1677ff;
-  transition: 0.3s ease;
-}
-
-.video-card:hover .play-btn {
-  transform: scale(1.15);
-  background: #ff4d4f;
-  color: white;
-}
-
-/* DURATION */
-.duration {
-  position: absolute;
-  bottom: 12px;
-  right: 12px;
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
-  padding: 5px 10px;
-  border-radius: 6px;
-  font-size: 0.85rem;
-}
-
-/* CONTENT */
-.video-content {
-  padding: 20px;
-  flex: 1;
-}
-
-.video-title {
-  font-size: 1.15rem;
-  font-weight: 700;
-  margin-bottom: 10px;
-  color: #1f2937;
-}
-
-.video-description {
-  font-size: 0.95rem;
-  color: #6b7280;
+.subtitle {
+  color: #cbd9d4;
+  font-size: 15px;
   line-height: 1.6;
+  margin: 0 0 32px;
 }
 
-/* MODAL VIDEO */
-.video-container {
-  position: relative;
-  padding-bottom: 56.25%;
-  height: 0;
+.actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
 }
 
-.video-container iframe {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
+.btn {
+  display: inline-block;
+  text-decoration: none;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 14.5px;
+  padding: 13px 30px;
+  border-radius: 999px;
+  cursor: pointer;
+  border: 1px solid transparent;
 }
 
-.modal-description {
-  margin-top: 20px;
-  padding: 15px;
-  background: #f5f7fa;
-  border-radius: 10px;
-  color: #374151;
+.btn.primary {
+  background: var(--accent);
+  color: #14201d;
 }
 
-.section-title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #2d3748;
-  position: relative;
-  padding-bottom: 1rem;
+.btn.primary:hover {
+  background: #f0c065;
 }
 
-.section-title::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80px;
-  height: 4px;
-  background: linear-gradient(90deg, #667eea, #764ba2);
-  border-radius: 2px;
+.btn.secondary {
+  background: transparent;
+  border-color: rgba(244, 246, 242, 0.35);
+  color: #f4f6f2;
 }
 
-@media (max-width: 768px) {
-  .section-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #2d3748;
-    position: relative;
-    padding-bottom: 1rem;
+.btn.secondary:hover {
+  background: rgba(244, 246, 242, 0.08);
+  border-color: rgba(244, 246, 242, 0.55);
+}
+
+/* Responsive : téléphone */
+@media (max-width: 480px) {
+  .landing {
+    padding: 1.5rem 1.25rem;
+    min-height: 100dvh;
   }
-}.section-title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #2d3748;
-  position: relative;
-  padding-bottom: 1rem;
-}
 
-.section-title::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80px;
-  height: 4px;
-  background: linear-gradient(90deg, #667eea, #764ba2);
-  border-radius: 2px;
-}
+  .glow {
+    width: 260px;
+    height: 260px;
+    top: -80px;
+    right: -80px;
+  }
 
-@media (max-width: 768px) {
-  .section-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #2d3748;
-    position: relative;
-    padding-bottom: 1rem;
+  .title {
+    font-size: 1.7rem;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    margin-bottom: 28px;
+  }
+
+  .actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+  }
+
+  .btn {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 14px 24px;
   }
 }
 </style>

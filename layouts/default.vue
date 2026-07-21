@@ -6,7 +6,7 @@
           <!-- Logo -->
           <NuxtLink to="/" class="navbar-brand d-flex align-items-center gap-2">
             <EnvironmentFilled class="fix-icon fs-5" />
-            <strong>TerrainVente</strong>
+            <strong>Sondage Moonbeam</strong>
           </NuxtLink>
 
           <!-- Burger -->
@@ -45,6 +45,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from "vue";
+import { useI18n } from "vue-i18n";
 import { menuItems } from "~/core/constant";
 
 const { isOpen, handleResize, toggleMenu, closeMenu } = useFunctions();
