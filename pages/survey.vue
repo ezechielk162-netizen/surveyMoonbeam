@@ -401,6 +401,7 @@ async function onSubmit() {
   height: fit-content;
 }
 
+
 .sections a {
   display: flex;
   align-items: center;
@@ -720,6 +721,7 @@ button {
     grid-template-columns: 1fr;
     margin-top: -20px;
   }
+  
   .sections {
     position: static;
     display: flex;
@@ -728,6 +730,9 @@ button {
   }
   .sections a {
     white-space: nowrap;
+  }
+  .card {
+    padding: 18px 16px;
   }
   .top,
   .layout {
