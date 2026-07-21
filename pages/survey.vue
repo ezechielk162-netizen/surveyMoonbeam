@@ -740,4 +740,25 @@ button {
     padding-right: 18px;
   }
 }
+
+@media (max-width: 380px) {
+  .card {
+    margin-top: 40px;
+    padding: 8px;
+  }
+  .rank-row {
+    flex-wrap: wrap;
+  }
+  .rank-row .rank-label {
+    width: 100%;
+  }
+  .top,
+  .layout {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  .sections {
+    display: none;
+  }
+}
 </style>
