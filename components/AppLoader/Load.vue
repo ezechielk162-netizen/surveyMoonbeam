@@ -18,7 +18,7 @@
 
     <div class="loader-text">
       <strong>Chargement</strong>
-      <span>Recherche des meilleurs terrains...</span>
+      <span>Récupération des informations du sondage…</span>
     </div>
 
     <div class="progress-bar">
@@ -33,14 +33,15 @@
 .loader-container {
   position: fixed;
   inset: 0;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(160deg, #164e48 0%, #0f3934 62%, #0c2e2a 100%);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: white;
+  color: #f4f6f2;
   gap: 2rem;
   z-index: 9999;
+  font-family: "Inter", system-ui, sans-serif;
 }
 
 /* Icône de localisation animée */
@@ -58,20 +59,20 @@
 
 /* Pin principal */
 .main-pin {
-  fill: white;
+  fill: #f4f6f2;
   animation: bounce 1.2s ease-in-out infinite;
   transform-origin: 60px 80px;
 }
 
 .pin-dot {
-  fill: #ff6b6b;
+  fill: #e8b14d;
   animation: pulse-dot 1.2s ease-in-out infinite;
 }
 
 /* Anneaux de pulsation */
 .pulse-ring {
   fill: none;
-  stroke: rgba(255, 255, 255, 0.8);
+  stroke: rgba(232, 177, 77, 0.75);
   stroke-width: 2;
   transform-origin: center;
 }
@@ -124,27 +125,30 @@
 /* Texte */
 .loader-text {
   text-align: center;
+  font-family: "Fraunces", serif;
 }
 
 .loader-text strong {
   font-size: 1.8rem;
-  font-weight: 700;
+  font-weight: 600;
   display: block;
   margin-bottom: 0.5rem;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .loader-text span {
-  opacity: 0.9;
+  opacity: 0.85;
   font-size: 1rem;
   font-weight: 400;
+  font-family: "Inter", system-ui, sans-serif;
+  color: #cbd9d4;
 }
 
 /* Barre de progression */
 .progress-bar {
   width: 280px;
   height: 4px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 50px;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
@@ -152,7 +156,7 @@
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #ff6b6b, #ffd93d, #ff6b6b);
+  background: linear-gradient(90deg, #e8b14d, #2c7a6e, #e8b14d);
   background-size: 200% 100%;
   border-radius: 50px;
   animation: progress-slide 1.5s ease-in-out infinite;
