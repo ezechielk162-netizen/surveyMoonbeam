@@ -348,12 +348,28 @@ function optionValues(key) {
   return OPTIONS[key] ?? [];
 }
 
-const { data: allResponses, pending, error } = await useFetch("/api/dashboard/apiDash", {
-  default: () => [],
-  transform: (rows) => rows.map((r) => ({ ...r, timestamp: new Date(r.timestamp) })),
-});
+/* ---------------- Données (fetch client, à chaque montage) ---------------- */
+// Appel volontairement fait dans onMounted (donc uniquement côté client,
+// après le montage du composant) plutôt que via useFetch au setup, pour
+// garantir un appel API frais à chaque rechargement de la page.
+const allResponses = ref([]);
+const pending = ref(true);
+const error = ref(null);
+const lastSync = ref("");
 
-const lastSync = ref(new Date().toLocaleTimeString("fr-CA"));
+const fetchResponses = async () => {
+  pending.value = true;
+  error.value = null;
+  try {
+    const rows = await $fetch("/api/dashboard/apiDash");
+    allResponses.value = rows.map((r) => ({ ...r, timestamp: new Date(r.timestamp) }));
+    lastSync.value = new Date().toLocaleTimeString("fr-CA");
+  } catch (e) {
+    error.value = e;
+  } finally {
+    pending.value = false;
+  }
+};
 
 /* ---------------- Filtres ---------------- */
 const filters = reactive({
@@ -854,6 +870,7 @@ function exportCsv() {
 
 /* ---------------- Cycle de vie ---------------- */
 onMounted(async () => {
+  await fetchResponses();
   await nextTick();
   renderCharts();
 });
